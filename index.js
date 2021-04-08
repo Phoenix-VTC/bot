@@ -15,7 +15,7 @@ client.once('ready', () => {
 client.registry
 	.registerDefaultTypes()
 	.registerGroups([
-		//
+		['greetings', 'Greeting Commands'],
 	])
 	.registerDefaultGroups()
 	.registerDefaultCommands()
