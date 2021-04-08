@@ -6,7 +6,7 @@ module.exports = class MeowCommand extends Command {
 			name: 'good-evening',
 			aliases: ['ge', 'evening'],
 			group: 'greetings',
-			memberName: 'good evening',
+			memberName: 'good-evening',
 			description: 'Replies with a good evening greeting.',
 		});
 	}
