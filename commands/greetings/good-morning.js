@@ -7,6 +7,7 @@ module.exports = {
 	name: 'gm',
 	aliases: ['morning', 'good-morning'],
 	description: 'Replies with a good morning greeting.',
+	guildOnly: true,
 	execute(message) {
 		message.channel.send('Goooooood mooorning, ' + message.author.toString() + '!', { files: [files[Math.floor(Math.random() * files.length)]] });
 	},

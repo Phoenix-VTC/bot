@@ -3,6 +3,7 @@ const fs = require('fs');
 module.exports = {
 	name: 'reload',
 	description: 'Reloads a command',
+	guildOnly: true,
 	permissions: 'ADMINISTRATOR',
 	args: true,
 	execute(message, args) {
