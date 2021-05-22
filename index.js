@@ -97,6 +97,10 @@ client.on('message', message => {
 
 	// Handle command permissions
 	if (command.permissions) {
+		if (message.channel.type === 'dm') {
+			return message.reply('I can\'t execute that command inside DMs!');
+		}
+
 		const authorPerms = message.channel.permissionsFor(message.author);
 		if (!authorPerms || !authorPerms.has(command.permissions)) {
 			return message.reply('You can not do this!');
