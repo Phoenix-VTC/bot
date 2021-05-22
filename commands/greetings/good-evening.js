@@ -12,6 +12,11 @@ module.exports = class GoodEveningCommand extends Command {
 	}
 
 	run(message) {
-		return message.say('Good evening to you too, ' + message.author.toString() + '!', { files: ['https://media1.tenor.com/images/36ea079b402b26236f428523f181c32a/tenor.gif'] });
+		const files = [
+			'https://i.imgur.com/Ak2X4cO.gif',
+			'https://media.giphy.com/media/b6n2AnLuEJQ15dMoVu/giphy.gif',
+		];
+
+		return message.say('Good evening to you too, ' + message.author.toString() + '!', { files: [files[Math.floor(Math.random() * files.length)]] });
 	}
 };
