@@ -23,6 +23,6 @@ module.exports = {
 	description: 'Bork bork',
 	guildOnly: true,
 	execute(message) {
-		message.channel.send('', { files: [files[Math.floor(Math.random() * files.length)]] });
+		message.channel.send(files[Math.floor(Math.random() * files.length)]);
 	},
 };
