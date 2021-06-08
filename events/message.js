@@ -54,6 +54,17 @@ module.exports = {
 			}
 		}
 
+		// Handle command requiredRole
+		if (command.requiredRole) {
+			if (message.channel.type === 'dm') {
+				return message.reply('I can\'t execute that command inside DMs!');
+			}
+
+			if (!message.member.roles.cache.some(role => role.name === command.requiredRole)) {
+				return message.reply('You can not do this!');
+			}
+		}
+
 		// Handle command arguments
 		if (command.args && !args.length) {
 			let reply = `You didn't provide any arguments, ${message.author}!`;
