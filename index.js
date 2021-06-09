@@ -41,3 +41,7 @@ for (const folder of commandFolders) {
 }
 
 client.login(token);
+
+process.on('unhandledRejection', error => {
+	console.error('Unhandled promise rejection:', error);
+});
