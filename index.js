@@ -1,6 +1,18 @@
 const fs = require('fs');
 const Discord = require('discord.js');
-const { token } = require('./config.json');
+const { env, token, sentry_dsn } = require('./config.json');
+
+if (env === 'production') {
+	const Sentry = require('@sentry/node');
+
+	Sentry.init({
+		dsn: sentry_dsn,
+
+		tracesSampleRate: 1.0,
+	});
+
+	console.log('Sentry enabled');
+}
 
 const client = new Discord.Client({ disableMentions: 'everyone' });
 client.commands = new Discord.Collection();
