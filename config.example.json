@@ -1,5 +1,7 @@
 {
   "prefix": "!",
   "token": "",
-  "owner_id": ""
+  "owner_id": "",
+  "base_auth_url": "http://base.test",
+  "base_auth_token": ""
 }
