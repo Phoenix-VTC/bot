@@ -6,7 +6,8 @@ module.exports = {
 	name: 'balance',
 	aliases: ['money', 'income'],
 	description: 'Show the author\'s PhoenixBase balance, if the author is a member.',
-	requiredRole: 'Phoenix Member',
+	// requiredRole: 'Phoenix Member',
+	requiredRole: 'Bot Tester',
 	guildOnly: true,
 	cooldown: 5,
 	async execute(message) {

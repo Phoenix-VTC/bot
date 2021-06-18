@@ -5,6 +5,7 @@ module.exports = {
 	description: 'Reloads a command',
 	guildOnly: true,
 	permissions: 'ADMINISTRATOR',
+	requiredRole: 'Bot Tester',
 	args: true,
 	usage: '<command-name>',
 	execute(message, args) {

@@ -4,6 +4,6 @@ module.exports = {
 	description: 'Pigeon',
 	guildOnly: true,
 	execute(message) {
-		message.channel.send('', { files: ['https://media.giphy.com/media/UI1ZhOe0oeuRy/giphy.gif'] });
+		// message.channel.send('', { files: ['https://media.giphy.com/media/UI1ZhOe0oeuRy/giphy.gif'] });
 	},
 };

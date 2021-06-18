@@ -9,6 +9,6 @@ module.exports = {
 	description: 'Replies with a good afternoon greeting.',
 	guildOnly: true,
 	execute(message) {
-		message.channel.send('Enjoy the rest of your day, ' + message.author.toString() + '!', { files: [files[Math.floor(Math.random() * files.length)]] });
+		// message.channel.send('Enjoy the rest of your day, ' + message.author.toString() + '!', { files: [files[Math.floor(Math.random() * files.length)]] });
 	},
 };

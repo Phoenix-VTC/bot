@@ -6,7 +6,8 @@ const { base_auth_url, base_auth_token } = require('../../config.json');
 module.exports = {
 	name: 'whois',
 	description: 'Show the user\'s PhoenixBase information, if the user is a member.',
-	requiredRole: 'Phoenix Member',
+	// requiredRole: 'Phoenix Member',
+	requiredRole: 'Bot Tester',
 	guildOnly: true,
 	args: true,
 	usage: '<user>',
