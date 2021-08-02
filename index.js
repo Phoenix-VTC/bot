@@ -18,6 +18,10 @@ const client = new Discord.Client({ disableMentions: 'everyone' });
 client.commands = new Discord.Collection();
 client.cooldowns = new Discord.Collection();
 
+const disbut = require('discord-buttons');
+
+disbut(client);
+
 const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
 
 for (const file of eventFiles) {
