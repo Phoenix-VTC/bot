@@ -1,3 +1,4 @@
+const { MessageButton } = require('discord-buttons');
 const { MessageEmbed } = require('discord.js');
 const fetch = require('node-fetch');
 const { base_auth_url, base_auth_token } = require('../../config.json');
@@ -15,7 +16,12 @@ module.exports = {
 		const userData = await response.json();
 
 		if (userData['status_code'] === 404) {
-			return message.channel.send(`We couldn't find you on the PhoenixBase, ${message.author}! Have you connected your Discord account?`);
+			const linkDiscordButton = new MessageButton()
+				.setStyle('url')
+				.setURL('https://base.phoenixvtc.com/settings/socials')
+				.setLabel('Link Your Discord');
+
+			return message.channel.send(`I couldn't find you on the PhoenixBase, ${message.author}! Have you connected your Discord account?`, linkDiscordButton);
 		}
 
 		if (userData['message']) {
@@ -28,8 +34,15 @@ module.exports = {
 			.setThumbnail(userData['profile_picture'])
 			.setURL(userData['profile_link'])
 			.addField('Wallet', `€ ${userData['wallet_balance']}`)
-			.addField('Event XP', `€ ${userData['event_xp']}`);
+			.addField('Event XP', `${userData['event_xp']} XP`)
+			.setFooter('PhoenixBase', 'https://base.phoenixvtc.com/img/logo.png')
+			.setTimestamp();
 
-		return message.channel.send(embed);
+		const viewProfileButton = new MessageButton()
+			.setStyle('url')
+			.setURL(userData['profile_link'])
+			.setLabel(`View ${userData['username']}'s Profile`);
+
+		return message.channel.send(embed, viewProfileButton);
 	},
 };

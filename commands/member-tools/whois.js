@@ -1,3 +1,4 @@
+const { MessageButton, MessageActionRow } = require('discord-buttons');
 const { MessageEmbed } = require('discord.js');
 const fetch = require('node-fetch');
 const moment = require('moment');
@@ -9,15 +10,20 @@ module.exports = {
 	// requiredRole: 'Phoenix Member',
 	requiredRole: 'Bot Tester',
 	guildOnly: true,
-	args: true,
 	usage: '<user>',
 	cooldown: 5,
 	async execute(message) {
-		if (message.mentions.users.first() === undefined) {
-			return message.channel.send(`Please tag a user in order to see their information, ${message.author}!`);
-		}
+		let id;
+		let username;
 
-		const id = message.mentions.users.first().id;
+		if (message.mentions.users.first() === undefined) {
+			id = message.author.id;
+			username = message.author.username;
+		}
+		else {
+			id = message.mentions.users.first().id;
+			username = message.mentions.users.first().username;
+		}
 
 		const response = await fetch(`${base_auth_url}/api/discord-bot/users/${id}`, { headers: { 'token': base_auth_token } });
 		const userData = await response.json();
@@ -32,7 +38,7 @@ module.exports = {
 
 		const embed = new MessageEmbed()
 			.setColor('#DC2F02')
-			.setTitle(`${message.mentions.users.first().username}'s Information`)
+			.setTitle(`${username}'s Information`)
 			.setThumbnail(userData['profile_picture'])
 			.setURL(userData['profile_link'])
 			.addField('PhoenixBase Username', userData['username'])
@@ -40,9 +46,19 @@ module.exports = {
 			.addField('TruckersMP ID', `[${userData['truckersmp_id']}](http://steamcommunity.com/user/${userData['truckersmp_id']})`, true)
 			.addField('Steam ID', `[${userData['steam_id']}](http://steamcommunity.com/profiles/${userData['steam_id']})`, true)
 			.addField('Wallet Balance', `€ ${userData['wallet_balance']}`, true)
-			.addField('Total Event XP', `${userData['event_xp']}`, true)
-			.addField('Member Since', moment.utc(userData['created_at']).format('LLL'));
+			.addField('Total Event XP', `${userData['event_xp']} XP`, true)
+			.addField('Member Since', moment.utc(userData['created_at']).format('LLL'))
+			.setFooter('PhoenixBase', 'https://base.phoenixvtc.com/img/logo.png')
+			.setTimestamp();
 
-		return message.channel.send(embed);
+		const viewProfileButton = new MessageButton()
+			.setStyle('url')
+			.setURL(userData['profile_link'])
+			.setLabel(`View ${userData['username']}'s Profile`);
+
+		const buttonRow = new MessageActionRow()
+			.addComponents(viewProfileButton);
+
+		return message.channel.send(embed, buttonRow);
 	},
 };
