@@ -22,6 +22,9 @@ const disbut = require('discord-buttons');
 
 disbut(client);
 
+const { DiscordTogether } = require('discord-together');
+client.discordTogether = new DiscordTogether(client);
+
 const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
 
 for (const file of eventFiles) {
