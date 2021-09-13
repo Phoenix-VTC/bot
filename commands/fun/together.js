@@ -10,7 +10,7 @@ let activities = [
 
 module.exports = {
 	name: 'together',
-	description: 'Create a YouTube Together invite for the voice channel you are currently in.',
+	description: 'Create a Together invite for the voice channel you are currently in.',
 	guildOnly: true,
 	args: true,
 	usage: '<application (e.g. YouTube)>',
