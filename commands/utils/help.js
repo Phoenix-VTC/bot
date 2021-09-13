@@ -35,6 +35,8 @@ module.exports = {
 
 		data.push(`**Name:** ${command.name}`);
 
+		if (command.permissions) data.push(`**Required Permission:** \`${command.permissions}\``);
+		if (command.requiredRole) data.push(`**Required Role:** ${command.requiredRole}`);
 		if (command.aliases) data.push(`**Aliases:** ${command.aliases.join(', ')}`);
 		if (command.description) data.push(`**Description:** ${command.description}`);
 		if (command.usage) data.push(`**Usage:** ${prefix}${command.name} ${command.usage}`);
