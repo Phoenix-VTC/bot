@@ -1,4 +1,5 @@
 const { MessageEmbed } = require('discord.js');
+const { MessageButton } = require('discord-buttons');
 
 module.exports = {
 	name: 'guildMemberAdd',
@@ -21,8 +22,12 @@ module.exports = {
 			.setFooter('New Discord Member', 'https://i.imgur.com/BQFq6OZ.png')
 			.setImage('https://i.imgur.com/Q7kyNJN.png');
 
-		channel.send(`${member}`, {
-			embed: embed,
-		});
+		const applyButton = new MessageButton()
+			.setStyle('url')
+			.setURL('https://apply.phoenixvtc.com')
+			.setLabel('Apply Now!');
+
+		channel.send(member.toString());
+		channel.send(embed, applyButton);
 	},
 };
