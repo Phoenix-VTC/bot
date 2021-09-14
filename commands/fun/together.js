@@ -1,6 +1,6 @@
 const { MessageButton } = require('discord-buttons');
 
-let activities = [
+const activities = [
 	'youtube',
 	'poker',
 	'betrayal',
@@ -25,8 +25,8 @@ module.exports = {
 		// Check if the chosen activity is invalid
 		if (!activities.includes(activity)) {
 			// Capitalize all items in the activities array
-			activities = activities.map(activitiesItem => activitiesItem.charAt(0).toUpperCase() + activitiesItem.slice(1));
-			return message.reply(`invalid option! Please choose one of the following activities:\n \`${activities.join(', ')}\``);
+			const activitiesCapitalized = activities.map(activitiesItem => activitiesItem.charAt(0).toUpperCase() + activitiesItem.slice(1));
+			return message.reply(`invalid option! Please choose one of the following activities:\n \`${activitiesCapitalized.join(', ')}\``);
 		}
 
 		message.client.discordTogether.createTogetherCode(message.member.voice.channel.id, activity).then(async invite => {
