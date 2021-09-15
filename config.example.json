@@ -1,9 +1,0 @@
-{
-  "env": "local",
-  "prefix": "!",
-  "token": "",
-  "owner_id": "",
-  "base_auth_url": "http://base.test",
-  "base_auth_token": "",
-  "sentry_dsn": ""
-}

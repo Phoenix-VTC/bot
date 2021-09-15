@@ -1,54 +1,57 @@
+// Require the necessary discord.js classes
 const fs = require('fs');
-const Discord = require('discord.js');
-const { env, token, sentry_dsn } = require('./config.json');
+const {Client, Collection, Intents} = require('discord.js');
+require('dotenv').config();
 
-if (env === 'production') {
-	const Sentry = require('@sentry/node');
+if (process.env.ENV !== 'local') {
+    const Sentry = require("@sentry/node");
+    // Importing @sentry/tracing patches the global hub for tracing to work.
+    const Tracing = require("@sentry/tracing");
 
-	Sentry.init({
-		dsn: sentry_dsn,
+    Sentry.init({
+        dsn: process.env.SENTRY_DSN,
 
-		tracesSampleRate: 1.0,
-	});
-
-	console.log('Sentry enabled');
+        tracesSampleRate: 1.0,
+    });
 }
 
-const client = new Discord.Client({ disableMentions: 'everyone' });
-client.commands = new Discord.Collection();
-client.cooldowns = new Discord.Collection();
+// Create a new client instance
+const client = new Client({
+    intents: [
+        Intents.FLAGS.GUILDS,
+        Intents.FLAGS.GUILD_VOICE_STATES,
+        Intents.FLAGS.GUILD_MEMBERS,
+    ],
+    allowedMentions: {
+        parse: ['users', 'roles'],
+        repliedUser: true
+    }
+});
 
-const disbut = require('discord-buttons');
-
-disbut(client);
-
-const { DiscordTogether } = require('discord-together');
+const {DiscordTogether} = require('discord-together');
 client.discordTogether = new DiscordTogether(client);
 
+client.commands = new Collection();
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+
+for (const file of commandFiles) {
+    const command = require(`./commands/${file}`);
+    // Set a new item in the Collection
+    // With the key as the command name and the value as the exported module
+    client.commands.set(command.data.name, command);
+}
+
+// When the client is ready, run this code (only once)
 const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
 
 for (const file of eventFiles) {
-	const event = require(`./events/${file}`);
-	if (event.once) {
-		client.once(event.name, (...args) => event.execute(...args, client));
-	}
-	else {
-		client.on(event.name, (...args) => event.execute(...args, client));
-	}
+    const event = require(`./events/${file}`);
+    if (event.once) {
+        client.once(event.name, (...args) => event.execute(...args));
+    } else {
+        client.on(event.name, (...args) => event.execute(...args));
+    }
 }
 
-const commandFolders = fs.readdirSync('./commands');
-
-for (const folder of commandFolders) {
-	const commandFiles = fs.readdirSync(`./commands/${folder}`).filter(file => file.endsWith('.js'));
-	for (const file of commandFiles) {
-		const command = require(`./commands/${folder}/${file}`);
-		client.commands.set(command.name, command);
-	}
-}
-
-client.login(token);
-
-process.on('unhandledRejection', error => {
-	console.error('Unhandled promise rejection:', error);
-});
+// Login to Discord with your client's token
+client.login(process.env.TOKEN);

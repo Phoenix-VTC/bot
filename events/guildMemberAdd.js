@@ -1,5 +1,4 @@
-const { MessageEmbed } = require('discord.js');
-const { MessageButton } = require('discord-buttons');
+const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
 
 module.exports = {
 	name: 'guildMemberAdd',
@@ -16,18 +15,24 @@ module.exports = {
 			.setTitle(`Hey, ${member.user.username}!`)
 			.setColor(14429954)
 			.setDescription('Welcome to the **Phoenix Community**! It\'s awesome to have you here. <:PhoenixLove:797449175171727360> \n \n' +
-                '<:Play:808490005357658164> To find out more about Phoenix, feel free to read <#786340866117074964>. \n' +
-                '<:Play:808490005357658164> If you are interested in joining our VTC, please check [our website](https://apply.phoenixvtc.com). \n' +
-                '<:Play:808490005357658164> Enjoy your time here! If you have any questions, let us know in <#787305785381617684>!')
+				'<:Play:808490005357658164> To find out more about Phoenix, feel free to read <#786340866117074964>. \n' +
+				'<:Play:808490005357658164> If you are interested in joining our VTC, please check [our website](https://apply.phoenixvtc.com). \n' +
+				'<:Play:808490005357658164> Enjoy your time here! If you have any questions, let us know in <#787305785381617684>!')
 			.setFooter('New Discord Member', 'https://i.imgur.com/BQFq6OZ.png')
 			.setImage('https://i.imgur.com/Q7kyNJN.png');
 
-		const applyButton = new MessageButton()
-			.setStyle('url')
-			.setURL('https://apply.phoenixvtc.com')
-			.setLabel('Apply Now!');
+		const row = new MessageActionRow()
+			.addComponents(
+				new MessageButton()
+					.setStyle('LINK')
+					.setURL('https://apply.phoenixvtc.com')
+					.setLabel('Apply now!'),
+			);
 
-		channel.send(member.toString());
-		channel.send(embed, applyButton);
+		channel.send({
+			content: member.toString(),
+			embeds: [embed],
+			components: [row],
+		});
 	},
 };
