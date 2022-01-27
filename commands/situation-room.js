@@ -55,6 +55,12 @@ async function channelCreate(interaction) {
 	// Get the user that will have access to the situation room
 	const user = interaction.options.getUser('user');
 
+	// Find the Human Resources Team role
+	const hrTeamRole = interaction.guild.roles.cache.find(r => r.name === 'Human Resources Team');
+
+	// Find the Senior Staff role
+	const seniorStaffRole = interaction.guild.roles.cache.find(r => r.name === 'Senior Staff');
+
 	// Create the situation room channel
 	await interaction.guild.channels.create(user.username, {
 		type: 'GUILD_TEXT',
@@ -67,6 +73,14 @@ async function channelCreate(interaction) {
 			},
 			{
 				id: user.id,
+				allow: ['VIEW_CHANNEL', 'SEND_MESSAGES'],
+			},
+			{
+				id: hrTeamRole.id,
+				allow: ['VIEW_CHANNEL', 'SEND_MESSAGES', 'MANAGE_MESSAGES'],
+			},
+			{
+				id: seniorStaffRole.id,
 				allow: ['VIEW_CHANNEL', 'SEND_MESSAGES'],
 			},
 		],
