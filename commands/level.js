@@ -73,7 +73,7 @@ module.exports = {
 				progressBar[0],
 			)
 			.addField('Event XP', `${userData['event_xp']} XP`, true)
-			.addField('Job XP', `${userData['event_xp']} XP`, true)
+			.addField('Job XP', `${userData['job_xp']} XP`, true)
 			.addField('Driver XP', `${userData['driver_points']} XP`, true)
 			.setFooter('PhoenixBase', 'https://base.phoenixvtc.com/img/logo.png')
 			.setTimestamp();
